@@ -4,7 +4,7 @@ import { getAllPostIds, getPostData } from '../../lib/posts';
 import Date from '../../components/date';
 
 export async function getStaticProps({ params }) {
-  const postData = await getPostData(params.id);
+  const postData = await getPostData(params.id as string);
   return {
     props: {
       postData,
@@ -20,16 +20,17 @@ export async function getStaticPaths() {
   };
 }
 
-export default function Post({ postData }) {
+export default function Post({ postData } : {postData: {
+  title:string,
+  date: string,
+  contentHtml: string
+}}) {
   return (
     <Layout>
         <Head>
         <title>{postData.title}</title>
         </Head>
-
         {postData.title}
-        <br />
-        {postData.id}
         <br />
         <Date dateString={postData.date} /> 
         <br />
